@@ -683,7 +683,7 @@ def display_overview_sheet(df):
                 elif name == "Target Yield %":
                     value = f"{value*100}%"
                 else:
-                    value = f"{value:.2f}%"
+                    value = f"{value:.2f}"
             st.markdown(
                 f"""
                 <div style='
