@@ -146,6 +146,8 @@ def display_monthly_data(df: pd.DataFrame, selected_month=None):
                     value = f"{data[col]*100:,.0f}%"
                 elif col == 'Total Unlock':
                     continue
+                elif col == 'Team':
+                    continue
                 else:
                     value = f"{data[col]:,.0f}"
                 
@@ -175,7 +177,7 @@ def display_monthly_data(df: pd.DataFrame, selected_month=None):
                     </div>
                     """, unsafe_allow_html=True)
     # Then display Total Unlock in full width
-    if 'Total Unlock' is col:
+    if 'Total Unlock' in col:
         value = f"{data['Total Unlock']:,.0f}"
         st.markdown(f"""
             <div style='
@@ -308,6 +310,8 @@ def display_yearly_data(df: pd.DataFrame, selected_year=None):
                 # Format value based on whether it's a percentage or number
                 if 'Circulating Supply %' in col:
                     value = f"{data[col]*100:,.0f}%"
+                elif col == 'Team':
+                    continue
                 elif col == 'Total Unlock':
                     continue
                 else:
@@ -474,6 +478,8 @@ def display_quarterly_data(df: pd.DataFrame, selected_quarter=None):
                 # Format value based on whether it's a percentage or number
                 if 'Circulating Supply %' in col:
                     value = f"{data[col]*100:,.0f}%"
+                elif col == 'Team':
+                    continue
                 elif col == 'Total Unlock':
                     continue
                 else:
@@ -681,7 +687,6 @@ def display_unlock_sheet(df):
     st.subheader("Unlock Data by Month")
     
     # Display monthly/yearly/quarterly data
-    print(df.columns)
     monthly_tab, quarterly_tab, yearly_tab = st.tabs(["Monthly View", "Quarterly View", "Yearly View"])
     months = df['Month'].tolist()
     quarters = [int(month/3) for month in months if month % 3 == 0]
