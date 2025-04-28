@@ -596,6 +596,10 @@ def display_overview_sheet(df):
     
     # Iterate through the pairs
     for i, (name, value) in enumerate(zip(names, values)):
+        # Skip if value is NaN
+        if pd.isna(value):
+            continue
+            
         col_index = i % 2
         with cols[col_index]:
             # Format value if it's a float - round and add %
@@ -677,6 +681,7 @@ def display_unlock_sheet(df):
     st.subheader("Unlock Data by Month")
     
     # Display monthly/yearly/quarterly data
+    print(df.columns)
     monthly_tab, quarterly_tab, yearly_tab = st.tabs(["Monthly View", "Quarterly View", "Yearly View"])
     months = df['Month'].tolist()
     quarters = [int(month/3) for month in months if month % 3 == 0]
