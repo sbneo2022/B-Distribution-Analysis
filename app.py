@@ -146,6 +146,8 @@ def display_monthly_data(df: pd.DataFrame, selected_month=None):
                     value = f"{data[col]*100:,.0f}%"
                 elif col == 'Total Unlock':
                     continue
+                elif col == 'Team':
+                    continue
                 else:
                     value = f"{data[col]:,.0f}"
                 
@@ -175,7 +177,7 @@ def display_monthly_data(df: pd.DataFrame, selected_month=None):
                     </div>
                     """, unsafe_allow_html=True)
     # Then display Total Unlock in full width
-    if 'Total Unlock' is col:
+    if 'Total Unlock' in col:
         value = f"{data['Total Unlock']:,.0f}"
         st.markdown(f"""
             <div style='
@@ -308,6 +310,8 @@ def display_yearly_data(df: pd.DataFrame, selected_year=None):
                 # Format value based on whether it's a percentage or number
                 if 'Circulating Supply %' in col:
                     value = f"{data[col]*100:,.0f}%"
+                elif col == 'Team':
+                    continue
                 elif col == 'Total Unlock':
                     continue
                 else:
@@ -474,6 +478,8 @@ def display_quarterly_data(df: pd.DataFrame, selected_quarter=None):
                 # Format value based on whether it's a percentage or number
                 if 'Circulating Supply %' in col:
                     value = f"{data[col]*100:,.0f}%"
+                elif col == 'Team':
+                    continue
                 elif col == 'Total Unlock':
                     continue
                 else:
@@ -596,6 +602,10 @@ def display_overview_sheet(df):
     
     # Iterate through the pairs
     for i, (name, value) in enumerate(zip(names, values)):
+        # Skip if value is NaN
+        if pd.isna(value):
+            continue
+            
         col_index = i % 2
         with cols[col_index]:
             # Format value if it's a float - round and add %
